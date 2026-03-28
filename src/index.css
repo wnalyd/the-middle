@@ -1,0 +1,26 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --color-primary: #ffb000;
+  --color-secondary: #cc8d00;
+  --color-bg: #1a1200;
+  --color-bg-raised: #211800;
+  --color-border: #5c4000;
+  --color-border-subtle: #3d2a00;
+  --color-bar-off: #2a1e00;
+
+  --font-mono: 'SF Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
