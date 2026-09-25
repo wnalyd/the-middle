@@ -371,14 +371,27 @@ Please identify the best bridge tracks from these candidates (or suggest alterna
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 4096,
+          model: "claude-sonnet-5",
+          max_tokens: 16000,
+          thinking: { type: "adaptive" },
+          output_config: { effort: "low" },
           system: SYSTEM_PROMPT,
           messages: [{ role: "user", content: userMessage }],
         }),
       });
 
       const data = await response.json();
+
+      if (data.stop_reason === "refusal") {
+        setStatus("error");
+        setErrorMsg("Claude declined this request. Try a different pair of songs.");
+        return;
+      }
+      if (data.stop_reason === "max_tokens") {
+        setStatus("error");
+        setErrorMsg("The response was cut off before it finished. Try again.");
+        return;
+      }
       const text = data.content?.map(b => b.text || "").join("") || "";
 
       let parsed;
